@@ -26,11 +26,11 @@ std::weak_ptr<GameScene> GameScene::CurrentGameScene()
     return app->getCurrentScene();
 }
 
-std::weak_ptr<b2World> GameScene::CurrentPhysicsWorld()
-{
-    AppDelegate *app = (AppDelegate*)cocos2d::Application::getInstance();
-    return app->getCurrentScene().lock()->getPhysicsWorld();
-}
+//std::weak_ptr<b2World> GameScene::CurrentPhysicsWorld()
+//{
+//    AppDelegate *app = (AppDelegate*)cocos2d::Application::getInstance();
+//    return app->getCurrentScene().lock()->getPhysicsWorld();
+//}
 
 GameScene::GameScene()
 {
@@ -39,6 +39,7 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+    teardown();
 }
 
 void GameScene::loop(float dt)
@@ -46,45 +47,43 @@ void GameScene::loop(float dt)
     //CCLOG("%f", dt);
     
     //destroy list
-    //fixed update
     
-    float32 fixedTimeStep = 1.0f / 60.0f;
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
+    //physics system handles fixed updates, collision handling, trigger handling and smooth animation step
+    mPhysicsSystem->update(dt);
     
-    mPhysicsWorld->Step(fixedTimeStep, velocityIterations, positionIterations);
+    //input processing and input state setting
+    mHMISystem->update(dt);
     
-    //collision handling
-    //trigger handling
-    //input processing
-    //update components
-    //
-    
-    // internal animation loop
-    GameObjectIt it;
-    for(it = mGameObjects.begin(); it != mGameObjects.end(); ++it)
+    IUpdatableIt it;
+    for(it = mUpdatableList.begin(); it != mUpdatableList.end(); ++it)
     {
-        (*it)->update();
+        (*it)->update(dt);
     }
+    
+    // late update (?)
+    mPhysicsSystem->lateUpdate(dt);
     
 }
 
 void GameScene::load()
 {
-    //b2Vec2 gravity(0.0f, -10.0f);
-    b2Vec2 gravity(0.0f, -1.0f);
-    mPhysicsWorld = std::shared_ptr<b2World>(new b2World(gravity));
+    // create systems
+    mPhysicsSystem = std::unique_ptr<PhysicsSystem>(new PhysicsSystem());
+    mHMISystem = std::unique_ptr<HMISystem>(new HMISystem());
+    
+    mPhysicsSystem->setup();
+    mHMISystem->setup();
     
     // load file stuff here
     GameObjectRef go = GameObject::Instantiate("helloworld");
-    mGameObjects.push_back(go);
+    mGameObjectList.push_back(go);
 }
 
 void GameScene::doSetup()
 {
     // create game objects here
     GameObjectIt it;
-    for(it = mGameObjects.begin(); it != mGameObjects.end(); ++it)
+    for(it = mGameObjectList.begin(); it != mGameObjectList.end(); ++it)
     {
         (*it)->setup();
     }
@@ -93,10 +92,15 @@ void GameScene::doSetup()
 void GameScene::doTeardown()
 {
     GameObjectIt it;
-    for(it = mGameObjects.begin(); it != mGameObjects.end(); ++it)
+    for(it = mGameObjectList.begin(); it != mGameObjectList.end(); ++it)
     {
         (*it)->teardown();
     }
     
-    mGameObjects.clear();
+    mGameObjectList.clear();
+    
+    mUpdatableList.clear();
+    
+    mPhysicsSystem->teardown();
+    mHMISystem->teardown();
 }

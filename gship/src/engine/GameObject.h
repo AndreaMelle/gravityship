@@ -16,7 +16,7 @@
 
 namespace engine
 {
-    class GameObject : public IObject, public IUpdatable
+    class GameObject : public IObject
     {
     public:
         static std::shared_ptr<GameObject> Instantiate(const std::string& templateName);
@@ -26,16 +26,14 @@ namespace engine
         
         void doSetup() override;
         void doTeardown() override;
-        void update() override;
         
         cocos2d::Node* getTransform() { return mTransform; }
+        void updateTransform(float x, float y, float rot = 0);
         
     private:
         GameObject();
         
-        std::map<std::string, GameComponentRef> mComponents;
-        
-        std::vector<IUpdatableRef> mUpdatables;
+        std::map<std::string, GameComponentRef> mComponents; //components are unique within the object!
         
         cocos2d::Node* mTransform; //every object must have a transform
         

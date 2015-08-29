@@ -13,27 +13,34 @@
 #include "GameComponent.h"
 #include "Box2D/Box2D.h"
 
-#define PTM_RATIO 10.0f
-
 namespace engine
 {
-    class PhysicsComponent : public GameComponent, public IUpdatable
+    class PhysicsComponent
+        : public GameComponent
+        , public IUpdatable
+        , public std::enable_shared_from_this<PhysicsComponent>
     {
-    public:
-        static std::shared_ptr<PhysicsComponent> Create(std::weak_ptr<GameObject> gameObject);
+        friend class PhysicsSystem;
         
+    public:
         virtual ~PhysicsComponent();
         
         void doSetup() override;
         void doTeardown() override;
         
         void start() override;
-        void update() override;
+        void update(float dt) override;
+        
+        b2Body *mBody;
+        
+        b2Vec2 mSmoothedPosition;
+        float mSmoothedAngle;
+        
+        b2Vec2 mPreviousPosition;
+        float mPreviousAngle;
         
     protected:
         PhysicsComponent(std::weak_ptr<GameObject> gameObject);
-        
-        b2Body *mBody;
         
         std::shared_ptr<b2BodyDef> mBodyDef; //ok because copied
         std::shared_ptr<b2PolygonShape> mShape; //ok because copied
@@ -45,6 +52,11 @@ namespace engine
     };
     
     typedef std::shared_ptr<PhysicsComponent> PhysicsComponentRef;
+    
+    inline cocos2d::Vec2 fromBox2D(const b2Vec2& v, float scale = 1.0f)
+    {
+        return (cocos2d::Vec2(v.x, v.y) * scale);
+    }
     
 }
 

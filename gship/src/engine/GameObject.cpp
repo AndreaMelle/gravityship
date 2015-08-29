@@ -36,12 +36,11 @@ std::shared_ptr<GameObject> GameObject::Instantiate(const std::string& templateN
     go->mTransform = ((SpriteComponent*)spriteComponent.get())->getTransform();
     
     PhysicsComponentRef physicsComponent;
-    physicsComponent = PhysicsComponent::Create(go);
+    physicsComponent = PhysicsSystem::Create(go);
     
     
     go->mComponents["sprite_c"] = spriteComponent;
     go->mComponents["physics_c"] = physicsComponent;
-    go->mUpdatables.push_back(physicsComponent);
     
     return go;
 }
@@ -78,18 +77,11 @@ void GameObject::doTeardown()
     }
     
     mComponents.clear();
-    mUpdatables.clear();
 }
 
-void GameObject::update()
+void GameObject::updateTransform(float x, float y, float rot)
 {
-    // perform internal animation loop
-
-    IUpdatableIt it;
-    for(it = mUpdatables.begin(); it != mUpdatables.end(); ++it)
-    {
-        (*it)->update();
-    }
-
+    mTransform->setPosition(x * PTM_RATIO, y * PTM_RATIO);
+    mTransform->setRotation(-1 * CC_RADIANS_TO_DEGREES(rot));
 }
 

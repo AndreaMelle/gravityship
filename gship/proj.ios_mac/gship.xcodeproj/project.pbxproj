@@ -12,6 +12,10 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		3C7CC9E41B909B6B007A11F7 /* PhysicsSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C7CC9E21B909B6B007A11F7 /* PhysicsSystem.cpp */; };
+		3C7CC9E51B909B6B007A11F7 /* PhysicsSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C7CC9E21B909B6B007A11F7 /* PhysicsSystem.cpp */; };
+		3C7CC9EA1B90A5C6007A11F7 /* HMISystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C7CC9E81B90A5C6007A11F7 /* HMISystem.cpp */; };
+		3C7CC9EB1B90A5C6007A11F7 /* HMISystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C7CC9E81B90A5C6007A11F7 /* HMISystem.cpp */; };
 		3C91E4151B8DE73A00A04B9B /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C91E4111B8DE73A00A04B9B /* AppDelegate.cpp */; };
 		3C91E4161B8DE73A00A04B9B /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C91E4111B8DE73A00A04B9B /* AppDelegate.cpp */; };
 		3C91E4171B8DE73A00A04B9B /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C91E4131B8DE73A00A04B9B /* HelloWorldScene.cpp */; };
@@ -125,6 +129,11 @@
 		1D6058910D05DD3D006BFB54 /* gship-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gship-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3C7CC9E21B909B6B007A11F7 /* PhysicsSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicsSystem.cpp; path = ../src/engine/systems/PhysicsSystem.cpp; sourceTree = "<group>"; };
+		3C7CC9E31B909B6B007A11F7 /* PhysicsSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhysicsSystem.h; path = ../src/engine/systems/PhysicsSystem.h; sourceTree = "<group>"; };
+		3C7CC9E81B90A5C6007A11F7 /* HMISystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HMISystem.cpp; path = ../src/engine/systems/HMISystem.cpp; sourceTree = "<group>"; };
+		3C7CC9E91B90A5C6007A11F7 /* HMISystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMISystem.h; path = ../src/engine/systems/HMISystem.h; sourceTree = "<group>"; };
+		3C7CC9EE1B90AE8F007A11F7 /* Interfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Interfaces.h; path = ../src/engine/commons/Interfaces.h; sourceTree = "<group>"; };
 		3C91E4111B8DE73A00A04B9B /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../src/AppDelegate.cpp; sourceTree = "<group>"; };
 		3C91E4121B8DE73A00A04B9B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../src/AppDelegate.h; sourceTree = "<group>"; };
 		3C91E4131B8DE73A00A04B9B /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = ../src/HelloWorldScene.cpp; sourceTree = "<group>"; };
@@ -313,9 +322,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3C7CC9E11B909B3C007A11F7 /* systems */ = {
+			isa = PBXGroup;
+			children = (
+				3C7CC9E21B909B6B007A11F7 /* PhysicsSystem.cpp */,
+				3C7CC9E31B909B6B007A11F7 /* PhysicsSystem.h */,
+				3C7CC9E81B90A5C6007A11F7 /* HMISystem.cpp */,
+				3C7CC9E91B90A5C6007A11F7 /* HMISystem.h */,
+			);
+			name = systems;
+			sourceTree = "<group>";
+		};
+		3C7CC9ED1B90AE4D007A11F7 /* commons */ = {
+			isa = PBXGroup;
+			children = (
+				3C7CC9EE1B90AE8F007A11F7 /* Interfaces.h */,
+			);
+			name = commons;
+			sourceTree = "<group>";
+		};
 		3C91E4191B8DE73E00A04B9B /* engine */ = {
 			isa = PBXGroup;
 			children = (
+				3C7CC9ED1B90AE4D007A11F7 /* commons */,
+				3C7CC9E11B909B3C007A11F7 /* systems */,
 				3C91E4311B8E261400A04B9B /* components */,
 				3C91E4251B8DF3AF00A04B9B /* RootLayer.cpp */,
 				3C91E4261B8DF3AF00A04B9B /* RootLayer.h */,
@@ -562,12 +592,14 @@
 				3C91E4171B8DE73A00A04B9B /* HelloWorldScene.cpp in Sources */,
 				3C91E4201B8DE7D100A04B9B /* TemplateManager.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				3C7CC9E41B909B6B007A11F7 /* PhysicsSystem.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				3C91E42F1B8DFF9900A04B9B /* GameComponent.cpp in Sources */,
 				3C91E41C1B8DE74C00A04B9B /* GameScene.cpp in Sources */,
 				3C91E4341B8E263800A04B9B /* SpriteComponent.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				3C91E4271B8DF3AF00A04B9B /* RootLayer.cpp in Sources */,
+				3C7CC9EA1B90A5C6007A11F7 /* HMISystem.cpp in Sources */,
 				3C91E42B1B8DFF8B00A04B9B /* GameObject.cpp in Sources */,
 				3C91E4771B8E3E5F00A04B9B /* PhysicsComponent.cpp in Sources */,
 			);
@@ -578,8 +610,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C91E4161B8DE73A00A04B9B /* AppDelegate.cpp in Sources */,
+				3C7CC9EB1B90A5C6007A11F7 /* HMISystem.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				3C91E41D1B8DE74C00A04B9B /* GameScene.cpp in Sources */,
+				3C7CC9E51B909B6B007A11F7 /* PhysicsSystem.cpp in Sources */,
 				3C91E4351B8E263800A04B9B /* SpriteComponent.cpp in Sources */,
 				3C91E4281B8DF3AF00A04B9B /* RootLayer.cpp in Sources */,
 				3C91E4211B8DE7D100A04B9B /* TemplateManager.cpp in Sources */,

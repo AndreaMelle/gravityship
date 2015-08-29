@@ -14,16 +14,17 @@
 #include "cocos2d.h"
 #include "RootLayer.h"
 #include "GameObject.h"
-#include "Box2D/Box2D.h"
+#include "PhysicsSystem.h"
+#include "HMISystem.h"
 
 namespace engine
 {
     class GameScene : public IObject, public IUpdateLink
     {
+        friend class PhysicsSystem;
     public:
         static std::shared_ptr<GameScene> Create();
         static std::weak_ptr<GameScene> CurrentGameScene();
-        static std::weak_ptr<b2World> CurrentPhysicsWorld();
         
         virtual ~GameScene();
         
@@ -33,19 +34,27 @@ namespace engine
         virtual void loop(float dt);
         
         cocos2d::Scene* getCCScene() { return mScene; }
-        cocos2d::Node* getRootTransform() { return mRootTransform; }
-        std::weak_ptr<b2World> getPhysicsWorld() { return mPhysicsWorld; }
         
+        //std::weak_ptr<b2World> getPhysicsWorld() { return mPhysicsWorld; }
+        
+        cocos2d::Node* getRootTransform() { return mRootTransform; }
         void setRootTransform(cocos2d::Node* root) override { mRootTransform = root; }
         
     private:
         GameScene();
         
-        cocos2d::Scene *mScene;
-        std::vector<GameObjectRef> mGameObjects;
-        cocos2d::Node* mRootTransform;
-        std::shared_ptr<b2World> mPhysicsWorld;
+        // systems
+        std::unique_ptr<PhysicsSystem> mPhysicsSystem;
+        std::unique_ptr<HMISystem> mHMISystem;
         
+        cocos2d::Scene *mScene;
+        cocos2d::Node* mRootTransform;
+        
+        // list of all objects, useful for creation and deletion
+        std::vector<GameObjectRef> mGameObjectList;
+        
+        //list of all objects we need to update
+        std::vector<IUpdatableRef> mUpdatableList;
         
     };
     
